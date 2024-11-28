@@ -1,0 +1,25 @@
+import discord
+import random
+from discord.ext import commands
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix="$", intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'Hemos iniciado sesión como {bot.user}')
+
+@bot.command(name='receta')
+async def receta(ctx):
+    with open('recetas.txt', 'r') as archivo:
+        contenido = archivo.read()
+
+    recetas = contenido.split('\n')
+
+    receta_aleatoria = random.choice(recetas)
+
+    await ctx.send(f"{receta_aleatoria}")
+
+bot.run("codigo de discord")
